@@ -1,0 +1,61 @@
+{% extends "workshop/base.html" %}
+{% block title %}Maintenance Schedule - {{ vehicle }}{% endblock %}
+{% block content %}
+<h2 class="text-2xl font-bold mb-4">Maintenance Schedule for {{ vehicle }}</h2>
+<form method="post" class="mb-6 max-w-md bg-white p-6 rounded shadow">
+    {% csrf_token %}
+    <label class="block mb-2">
+        Maintenance Type:
+        <input type="text" name="maintenance_type" required class="w-full border rounded p-2" />
+    </label>
+    <label class="block mb-2">
+        Scheduled Date:
+        <input type="date" name="scheduled_date" required class="w-full border rounded p-2" />
+    </label>
+    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 mt-2">Add Maintenance</button>
+</form>
+
+<h3 class="text-xl font-semibold mb-2">Upcoming Maintenances</h3>
+<table class="min-w-full bg-white rounded shadow mb-6">
+    <thead>
+        <tr>
+            <th class="py-2 px-4 border-b">Date</th>
+            <th class="py-2 px-4 border-b">Maintenance Type</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for maintenance in upcoming_maintenances %}
+        <tr class="hover:bg-gray-100">
+            <td class="py-2 px-4 border-b">{{ maintenance.scheduled_date }}</td>
+            <td class="py-2 px-4 border-b">{{ maintenance.maintenance_type }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="2" class="py-4 text-center">No upcoming maintenances.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h3 class="text-xl font-semibold mb-2">Past Maintenances</h3>
+<table class="min-w-full bg-white rounded shadow">
+    <thead>
+        <tr>
+            <th class="py-2 px-4 border-b">Date</th>
+            <th class="py-2 px-4 border-b">Maintenance Type</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for maintenance in past_maintenances %}
+        <tr class="hover:bg-gray-100">
+            <td class="py-2 px-4 border-b">{{ maintenance.scheduled_date }}</td>
+            <td class="py-2 px-4 border-b">{{ maintenance.maintenance_type }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="2" class="py-4 text-center">No past maintenances.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
