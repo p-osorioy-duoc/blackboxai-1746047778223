@@ -1,0 +1,25 @@
+{% extends "workshop/base.html" %}
+{% block title %}Add Owner - Mechanical Workshop{% endblock %}
+{% block content %}
+<h2 class="text-2xl font-bold mb-4">Add Owner</h2>
+<form method="post" class="max-w-md bg-white p-6 rounded shadow">
+    {% csrf_token %}
+    <label class="block mb-2">
+        First Name:
+        <input type="text" name="first_name" required class="w-full border rounded p-2" />
+    </label>
+    <label class="block mb-2">
+        Last Name:
+        <input type="text" name="last_name" required class="w-full border rounded p-2" />
+    </label>
+    <label class="block mb-2">
+        Email:
+        <input type="email" name="email" required class="w-full border rounded p-2" />
+    </label>
+    <label class="block mb-2">
+        Phone:
+        <input type="text" name="phone" class="w-full border rounded p-2" />
+    </label>
+    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 mt-4">Add Owner</button>
+</form>
+{% endblock %}
