@@ -1,0 +1,37 @@
+{% extends "workshop/base.html" %}
+{% block title %}Repair History - {{ vehicle }}{% endblock %}
+{% block content %}
+<h2 class="text-2xl font-bold mb-4">Repair History for {{ vehicle }}</h2>
+<form method="post" class="mb-6 max-w-md bg-white p-6 rounded shadow">
+    {% csrf_token %}
+    <label class="block mb-2">
+        Description:
+        <textarea name="description" required class="w-full border rounded p-2"></textarea>
+    </label>
+    <label class="block mb-2">
+        Date:
+        <input type="date" name="date" required class="w-full border rounded p-2" />
+    </label>
+    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 mt-2">Add Repair</button>
+</form>
+<table class="min-w-full bg-white rounded shadow">
+    <thead>
+        <tr>
+            <th class="py-2 px-4 border-b">Date</th>
+            <th class="py-2 px-4 border-b">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for repair in repairs %}
+        <tr class="hover:bg-gray-100">
+            <td class="py-2 px-4 border-b">{{ repair.date }}</td>
+            <td class="py-2 px-4 border-b">{{ repair.description }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="2" class="py-4 text-center">No repair history found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
