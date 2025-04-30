@@ -1,0 +1,41 @@
+{% extends "workshop/base.html" %}
+{% block title %}Vehicles - Mechanical Workshop{% endblock %}
+{% block content %}
+<h2 class="text-2xl font-bold mb-4">Vehicles</h2>
+<form method="get" class="mb-4">
+    <input type="text" name="q" placeholder="Search vehicles..." value="{{ query|default:'' }}" class="border rounded p-2 w-full max-w-md" />
+    <button type="submit" class="ml-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Search</button>
+    <a href="{% url 'workshop:vehicle_add' %}" class="ml-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Add Vehicle</a>
+</form>
+<table class="min-w-full bg-white rounded shadow">
+    <thead>
+        <tr>
+            <th class="py-2 px-4 border-b">Make</th>
+            <th class="py-2 px-4 border-b">Model</th>
+            <th class="py-2 px-4 border-b">Year</th>
+            <th class="py-2 px-4 border-b">License Plate</th>
+            <th class="py-2 px-4 border-b">Owner</th>
+            <th class="py-2 px-4 border-b">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for vehicle in vehicles %}
+        <tr class="hover:bg-gray-100">
+            <td class="py-2 px-4 border-b">{{ vehicle.make }}</td>
+            <td class="py-2 px-4 border-b">{{ vehicle.model }}</td>
+            <td class="py-2 px-4 border-b">{{ vehicle.year }}</td>
+            <td class="py-2 px-4 border-b">{{ vehicle.license_plate }}</td>
+            <td class="py-2 px-4 border-b">{{ vehicle.owner.first_name }} {{ vehicle.owner.last_name }}</td>
+            <td class="py-2 px-4 border-b">
+                <a href="{% url 'workshop:repair_history' vehicle.id %}" class="text-blue-600 hover:underline mr-2">Repairs</a>
+                <a href="{% url 'workshop:maintenance_schedule' vehicle.id %}" class="text-green-600 hover:underline">Maintenance</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6" class="py-4 text-center">No vehicles found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
